@@ -9,5 +9,5 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 driver = webdriver.Chrome(options=chrome_options)
 
 #The website we will do tests on
-driver.get("https://joindiaspora.com/")
+driver.get("https://diasporafoundation.org/")
 
