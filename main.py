@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from pynput.keyboard import Key, Controller
 import unittest
 import time
 unittest.TestLoader.sortTestMethodsUsing = None
@@ -72,8 +73,30 @@ class DiasporaTest(unittest.TestCase):
 		if correctAccount:
 			print("Account verified!")
 		assert correctAccount
+	
+	def test_4(self):
+		#like a post
+		time.sleep(3)
+		print("Click like a post")
+		likePost = driver.find_element(By.CLASS_NAME, "like")
+		likePost.click()
+		time.sleep(5)
+    
+	def test_5(self):
+		#share a post
+		print("Click share a post")
+		sharePost = driver.find_element(By.CLASS_NAME, "reshare")
+		sharePost.click()
+		time.sleep(3)
+		keyboard = Controller()
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		time.sleep(6)
+		print("Verifying the profile page")
+		driver.get(profAdd)
+		time.sleep(5)
 
-	def test_3(self):
+	def test_6(self):
 		#Change this to be the last TestCase whenerver you make one
 		print("Closing Tab.")
 		driver.close()
