@@ -2,19 +2,23 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from pynput.keyboard import Key, Controller
+from selenium.webdriver.common.keys import Keys
 import unittest
 import time
+
+
 unittest.TestLoader.sortTestMethodsUsing = None
 chrome_options = Options()
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument("window-size=1200x600")
 driver = webdriver.Chrome(options=chrome_options)
 
 userNTextID = "user_username"
 userPTextID = "user_password"
 commitButtonName = "commit"
 profAdd = "https://podington.oksocial.net/u/dummy123"
-
+tagName = "#movies"
 # #All this stuff makes it so we can use in repl
 # chrome_options = Options()
 # chrome_options.add_argument('--no-sandbox')
@@ -73,7 +77,20 @@ class DiasporaTest(unittest.TestCase):
 		if correctAccount:
 			print("Account verified!")
 		assert correctAccount
-	
+
+	def test_3(self):
+		time.sleep(5)
+		print("Third Test Searching for Tags")
+		time.sleep(5)
+		searchBox = driver.find_element(By.ID,"q")
+		searchBox.clear()
+		searchBox.send_keys(tagName)
+		print("tag name has been typed")
+		time.sleep(5)
+		searchBox.send_keys(Keys.RETURN)
+		print("displaying the searching results")
+		time.sleep(10)
+
 	def test_4(self):
 		#like a post
 		time.sleep(3)
@@ -101,6 +118,8 @@ class DiasporaTest(unittest.TestCase):
 		print("Closing Tab.")
 		driver.close()
 		assert True
+
+
 	def tearDown(self):
 		print("Tearing down")
 
