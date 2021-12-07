@@ -18,7 +18,18 @@ userNTextID = "user_username"
 userPTextID = "user_password"
 commitButtonName = "commit"
 profAdd = "https://podington.oksocial.net/u/dummy123"
-tagName = "#movies"
+tagName = "#food"
+composeButtonID = "compose-badge"
+textAreaID = "status_message_text"
+shareButtonID = "submit"
+composeSubmitID = "submit_new_message"
+dummyText = """This is Dummy Text created by a selenium bot for testing purposes.
+
+Do not be alarmed!
+
+Best,
+Dummy123
+#selenium"""
 # #All this stuff makes it so we can use in repl
 # chrome_options = Options()
 # chrome_options.add_argument('--no-sandbox')
@@ -79,25 +90,27 @@ class DiasporaTest(unittest.TestCase):
 		assert correctAccount
 
 	def test_3(self):
-		time.sleep(5)
+		time.sleep(2)
 		print("Third Test Searching for Tags")
-		time.sleep(5)
+		time.sleep(2)
 		searchBox = driver.find_element(By.ID,"q")
 		searchBox.clear()
 		searchBox.send_keys(tagName)
 		print("tag name has been typed")
-		time.sleep(5)
+		time.sleep(2)
 		searchBox.send_keys(Keys.RETURN)
 		print("displaying the searching results")
-		time.sleep(10)
+		time.sleep(5)
+		assert True
 
 	def test_4(self):
 		#like a post
-		time.sleep(3)
+		time.sleep(2)
 		print("Click like a post")
 		likePost = driver.find_element(By.CLASS_NAME, "like")
 		likePost.click()
-		time.sleep(5)
+		time.sleep(2)
+		assert True
     
 	def test_5(self):
 		#share a post
@@ -108,13 +121,56 @@ class DiasporaTest(unittest.TestCase):
 		keyboard = Controller()
 		keyboard.press(Key.enter)
 		keyboard.release(Key.enter)
-		time.sleep(6)
-		print("Verifying the profile page")
-		driver.get(profAdd)
-		time.sleep(5)
+		time.sleep(3)
+		print("Go back To Home Page")
+		driver.get("https://podington.oksocial.net/stream")
+		time.sleep(2)
+		assert True
 
 	def test_6(self):
+		print("This Test will create a Post.")
+		try:
+			composeButton = driver.find_element(By.ID, composeButtonID)
+			time.sleep(1)
+			composeButton.click()
+			time.sleep(2)
+			print("Composing post...")
+			textArea = driver.find_element(By.ID, textAreaID)
+			textArea.clear()
+			textArea.send_keys(dummyText)
+			time.sleep(3)
+			submitButton = driver.find_element(By.ID, composeSubmitID)
+			submitButton.click()
+			time.sleep(3)
+			divElement = driver.find_element(By.CLASS_NAME, "nsfw-hidden")
+			divElement = divElement.find_element(By.CLASS_NAME, "ltr")
+			textParagraph = divElement.find_element(By.TAG_NAME, 'p')
+			assert dummyText is textParagraph.text
+		   
+		except:
+			time.sleep(2)
+			print("Composing post...")
+			textArea = driver.find_element(By.ID, textAreaID)
+			textArea.click()
+			textArea.clear()
+			textArea.send_keys(dummyText)
+			time.sleep(3)
+			submitButton = driver.find_element(By.ID, shareButtonID)
+			submitButton.click()
+			time.sleep(3)
+			print("Dummy Text Posted")
+			# divElement = driver.find_element(By.CLASS_NAME, "collapsible-nsfw-hidden")
+			# divElement = divElement.find_element(By.CLASS_NAME, "markdown-content")
+			
+			assert True
+
+		
+
+		
+
+	def test_7(self):
 		#Change this to be the last TestCase whenerver you make one
+		time.sleep(3)
 		print("Closing Tab.")
 		driver.close()
 		assert True
@@ -126,4 +182,5 @@ class DiasporaTest(unittest.TestCase):
 
 if __name__ == "__main__":
 	driver.get("https://podington.oksocial.net/")
+	driver.maximize_window()
 	unittest.main()
