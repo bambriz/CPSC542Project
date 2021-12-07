@@ -5,11 +5,11 @@ Automated Testing for Diaspora
 542
 
 ### Team members:
-> Bryan Erick Ambriz:
+> Bryan Erick Ambriz
 
-> Hanyue Zheng:
+> Hanyue Zheng
 
-> Jingzhi Su: Jingzhi_Su@csu.fullerton.edu
+> Jingzhi Su
 
 ### Description of the project:
 Manual Approach:
